@@ -1,4 +1,5 @@
 {
+    "name": "max-stan/symfony-cli",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
